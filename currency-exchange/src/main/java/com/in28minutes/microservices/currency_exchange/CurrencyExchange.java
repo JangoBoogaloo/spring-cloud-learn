@@ -1,22 +1,35 @@
 package com.in28minutes.microservices.currency_exchange;
 
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 import java.math.BigDecimal;
 
+@Entity
 public class CurrencyExchange {
+
+    @Id
     private Long id;
-    private String from;
-    private String to;
+
+    @Column(name = "currency_from")
+    private String currencyFrom;
+
+    @Column(name = "currency_to")
+    private String currencyTo;
+
     private BigDecimal rate;
     private String environment;
 
     public CurrencyExchange() {
         super();
     }
-    public CurrencyExchange(Long id, String from, String to, BigDecimal rate, String environment) {
+    public CurrencyExchange(Long id, String currencyFrom, String currencyTo, BigDecimal rate, String environment) {
         super();
         this.id = id;
-        this.from = from;
-        this.to = to;
+        this.currencyFrom = currencyFrom;
+        this.currencyTo = currencyTo;
         this.rate = rate;
         this.environment = environment;
     }
@@ -29,20 +42,20 @@ public class CurrencyExchange {
         this.id = id;
     }
 
-    public String getFrom() {
-        return from;
+    public String getCurrencyFrom() {
+        return currencyFrom;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setCurrencyFrom(String from) {
+        this.currencyFrom = from;
     }
 
-    public String getTo() {
-        return to;
+    public String getCurrencyTo() {
+        return currencyTo;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public void setCurrencyTo(String to) {
+        this.currencyTo = to;
     }
 
     public BigDecimal getRate() {
