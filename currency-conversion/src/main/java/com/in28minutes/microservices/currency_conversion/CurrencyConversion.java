@@ -18,6 +18,8 @@ public class CurrencyConversion {
 
     private String environment;
 
+    private String error;
+
     public CurrencyConversion() {
         super();
     }
@@ -31,6 +33,7 @@ public class CurrencyConversion {
         this.quantity = quantity;
         this.totalCalculatedAmount = totalCalculatedAmount;
         this.environment = environment;
+        this.error = "";
     }
 
     public Long getId() {
@@ -87,5 +90,13 @@ public class CurrencyConversion {
 
     public void setTotalCalculatedAmount(BigDecimal totalCalculatedAmount) {
         this.totalCalculatedAmount = totalCalculatedAmount;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }
