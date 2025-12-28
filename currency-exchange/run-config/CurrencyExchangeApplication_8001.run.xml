@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CurrencyExchangeApplication_8001" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+    <module name="currency-exchange" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.in28minutes.microservices.currency_exchange.CurrencyExchangeApplication" />
+    <option name="VM_PARAMETERS" value="-Dserver.port=8001" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
