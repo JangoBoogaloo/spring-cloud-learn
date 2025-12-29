@@ -1,5 +1,6 @@
 package com.in28minutes.microservices.currency_conversion;
 
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
@@ -21,6 +22,13 @@ public class CurrencyConversionController {
 
     @Autowired
     private ICurrencyExchangeProxy currencyExchangeProxy;
+
+    @GetMapping("/bulk-head-test")
+    @Bulkhead(name = "default")
+    public String BulkHeadTest() {
+        logger.info("Request Time {} ms", System.currentTimeMillis()/1000L);
+        return "Bulk head test";
+    }
 
     @GetMapping("/rate-limit-test")
     @RateLimiter(name = "default")
