@@ -1,5 +1,6 @@
 package com.in28minutes.microservices.currency_conversion;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +21,19 @@ public class CurrencyConversionController {
     @Autowired
     private ICurrencyExchangeProxy currencyExchangeProxy;
 
+    @CircuitBreaker(name = "default", fallbackMethod = "fallbackErrorConversion")
     @GetMapping("/currency-conversion/from/{currencyFrom}/to/{currencyTo}/quantity/{quantity}")
     public CurrencyConversion calculateCurrencyConversion(
             @PathVariable String currencyFrom,
             @PathVariable String currencyTo,
             @PathVariable BigDecimal quantity) {
+        logger.info("Request Time {} seconds", System.currentTimeMillis() / 1000L);
+        requestCount += 1;
+        if (requestCount % 5 != 0) {
+            ResponseEntity<CurrencyConversion> failEntity = new RestTemplate().getForEntity("http://localhost:8100/not-found-url", CurrencyConversion.class);
+            return failEntity.getBody();
+        }
+        requestCount = 0;
         HashMap<String, String> uriVariables = new HashMap<>();
         uriVariables.put("currencyFrom", currencyFrom);
         uriVariables.put("currencyTo", currencyTo);
