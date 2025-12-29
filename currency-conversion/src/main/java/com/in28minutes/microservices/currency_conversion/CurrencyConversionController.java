@@ -1,6 +1,7 @@
 package com.in28minutes.microservices.currency_conversion;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +22,15 @@ public class CurrencyConversionController {
     @Autowired
     private ICurrencyExchangeProxy currencyExchangeProxy;
 
-    @CircuitBreaker(name = "default", fallbackMethod = "fallbackErrorConversion")
+    @GetMapping("/rate-limit-test")
+    @RateLimiter(name = "default")
+    public String rateLimitTest() {
+        logger.info("Request Time {} seconds", System.currentTimeMillis() / 1000L);
+        return "Rate limit test";
+    }
+
     @GetMapping("/currency-conversion/from/{currencyFrom}/to/{currencyTo}/quantity/{quantity}")
+    @CircuitBreaker(name = "default", fallbackMethod = "fallbackErrorConversion")
     public CurrencyConversion calculateCurrencyConversion(
             @PathVariable String currencyFrom,
             @PathVariable String currencyTo,
